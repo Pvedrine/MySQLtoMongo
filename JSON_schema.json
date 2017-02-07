@@ -1,0 +1,140 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+	  //Genres
+    "Genres": {
+      "type": "object",
+      "properties": {
+        "genre": {
+          "type": "string",
+          "id": "genre"
+        }
+      },
+      "id": "Genres",
+      "required": [
+        "genre"
+      ]
+    },
+    //description of the movies
+    "Movies": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "id": "title"
+        },
+        "release_date": {
+          "type": "integer",
+          "id": "release_date"
+        },
+        "video": {
+          "type": "string",
+          "id": "video"
+        },
+        "IMDBURL": {
+          "type": "string",
+          "id": "IMDBURL"
+        }
+      },
+      "id": "Movies",
+      "required": [
+        "title",
+        "release_date",
+        "video",
+        "IMDBURL"
+      ]
+    },
+    //users details
+    "Users": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "id": "id"
+        },
+        "age": {
+          "type": "integer",
+          "id": "age"
+        },
+        "gender": {
+          "type": "string",
+          "id": "gender"
+        },
+        "occupation": {
+          "type": "string",
+          "id": "occupation"
+        },
+        "zip_code": {
+          "type": "integer",
+          "id": "zip_code"
+        }
+      },
+      "id": "Users",
+      "required": [
+        "id",
+        "age",
+        "gender",
+        "occupation",
+        "zip_code"
+      ]
+    },
+    //ratings of the users
+    "Ratings": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "integer",
+          "id": "user"
+        },
+        "movie": {
+          "type": "string",
+          "id": "movie"
+        },
+        "rating": {
+          "type": "integer",
+          "id": "rating"
+        },
+        "timestamp": {
+          "type": "integer",
+          "id": "timestamp"
+        }
+      },
+      "id": "Ratings",
+      "required": [
+        "user",
+        "movie",
+        "rating",
+        "timestamp"
+      ]
+    },
+    //genres of the movies
+    "movies_genres": {
+      "type": "object",
+      "properties": {
+        "movie": {
+          "type": "string",
+          "id": "movie"
+        },
+        "genre": {
+          "type": "string",
+          "id": "genre"
+        }
+      },
+      "id": "movies_genres",
+      "required": [
+        "movie",
+        "genre"
+      ]
+    }
+  },
+  //what is required to add
+  "id": "/",
+  "required": [
+    "Genres",
+    "Movies",
+    "Users",
+    "Ratings",
+    "movies_genres"
+  ]
+}
