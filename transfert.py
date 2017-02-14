@@ -5,6 +5,8 @@ import json #json lib
 import collections
 import subprocess
 
+
+#connection to the MySQL database 
 db = MySQLdb.connect(host="mysql-server-1", #host
 					 user="pv7", #username
 					 passwd="abcpv7354", #hardcoded password /!\
@@ -13,11 +15,11 @@ db = MySQLdb.connect(host="mysql-server-1", #host
 #creation of a Cursor
 cur = db.cursor()
 
-
+#function that get a table and return a json file
 def getTableToJSOn(SetofArg, NameOfTable) :
 	rows = list ()
 	try:
-		#sql query
+		#sql query                    each row from the set  
 		cur.execute("SELECT " + ', '.join(str(arg) for arg in SetofArg) + " FROM " + NameOfTable)
 		rows = cur.fetchall()
 	#~ #handling errors
@@ -37,19 +39,19 @@ def getTableToJSOn(SetofArg, NameOfTable) :
 			i += 1
 		row_list.append(d)
 	#dumping the dict into a json file
-	j = json.dumps(row_list, ensure_ascii=False, encoding='utf-8') #For reaons, we need to put false to ensure ascii and add the encoding utf-8 here despite its already the encoding...
+	j = json.dumps(row_list, ensure_ascii=False, encoding='utf-8') #For reaons, we need to put false to ensure ascii and add the encoding utf-8 here despite we have set the encoding before...
 	nameoffile = NameOfTable + ".json"								# Otherwise it would raise an error Unicode Decode : utf8 codec can't decode byte
 	f = open(nameoffile, 'w')
 	print >> f, j
-	print ("Saved %s" % nameoffile)
+	print ("Saved %s" % nameoffile) #saving the file
 
-#getting the data from the tables into a json file
+#getting the data from the tables into a json file, first arg is a array of the rows and the second arg is the name og the table
 getTableToJSOn(['title', 'release_date', 'video', 'IMDBURL'], "movies")
 getTableToJSOn(['genre'], "genres")
 getTableToJSOn(['id', 'age', 'gender', 'occupation', 'zip_code'], "users")
 getTableToJSOn(['user', 'movie', 'rating', 'timestamp'], "ratings")
 
-#execution of a bash command to add the JSOn files into MogoDB
+#execution of a bash command to add the JSOn files into MongoDB
 print ("Importing JSON files into MongoDB")
 #the bash command is reapeated for each file, so we need to type the password 4 times
 for f in ['movies.json', 'genres.json', 'users.json', 'ratings.json']:
