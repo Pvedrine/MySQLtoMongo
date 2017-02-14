@@ -45,6 +45,14 @@ def getTableToJSOn(SetofArg, NameOfTable) :
 	print >> f, j
 	print ("Saved %s" % nameoffile) #saving the file
 
+#function to import a jsonfile into mongo
+def Tomongo(jsonfile):
+	BashCommand = "mongoimport --db pv7 -u pv7 --host mongo-server-1 --authenticationDatabase pv7 --collection movielens --file " + jsonfile + " --jsonArray"
+	process = subprocess.Popen(BashCommand.split(), stdout=subprocess.PIPE)
+	output, error = process.communicate()
+
+
+
 #getting the data from the tables into a json file, first arg is a array of the rows and the second arg is the name og the table
 getTableToJSOn(['title', 'release_date', 'video', 'IMDBURL'], "movies")
 getTableToJSOn(['genre'], "genres")
@@ -53,10 +61,10 @@ getTableToJSOn(['user', 'movie', 'rating', 'timestamp'], "ratings")
 
 #execution of a bash command to add the JSOn files into MongoDB
 print ("Importing JSON files into MongoDB")
+
 #the bash command is reapeated for each file, so we need to type the password 4 times
 for f in ['movies.json', 'genres.json', 'users.json', 'ratings.json']:
-	BashCommand = "mongoimport --db pv7 -u pv7 --host mongo-server-1 --authenticationDatabase pv7 --collection movielens --file " + f + " --jsonArray"
-	process = subprocess.Popen(BashCommand.split(), stdout=subprocess.PIPE)
-	output, error = process.communicate()
+	Tomongo(f)
+
 cur.close()
 db.close()
